@@ -16,10 +16,13 @@ class App extends React.Component<IProps, ITaskList> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      store: JSON.parse((localStorage.getItem("TODO")! || "[]"))
+      store: JSON.parse((localStorage.getItem("TODO")! || "[]")),
+      search: ''
     }
     this.addItem = this.addItem.bind(this);
     this.addItemTime = this.addItemTime.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.seachim = this.seachim.bind(this);
   }
   componentDidUpdate(){
       localStorage.setItem("TODO", JSON.stringify(this.state.store)); 
@@ -58,6 +61,20 @@ class App extends React.Component<IProps, ITaskList> {
       
     );
   }
+  deleteItem(id: string) {
+    this.setState(prev => ({
+      store: prev.store.filter(item => item.id !== Number(id))
+    }))
+  }
+  seachim(query: string){
+    this.setState({search: query})
+    //   this.setState(prev =>({
+    //   store: prev.store.filter(todo =>
+    //     todo.title.toLowerCase().includes(query.toLowerCase())
+    //   )
+    // })
+    // )
+  }
   // switchTodo(id: number) {
   //   this.setState(prev => ({
   //     store: prev.store.map(todo =>
@@ -71,9 +88,12 @@ class App extends React.Component<IProps, ITaskList> {
         <Controls 
         submitHandler={this.addItem}
         submitTimeHandler={this.addItemTime}
+        searchHandler={this.seachim}
         />
         <TaskList 
-        store={this.state.store}
+        // store={this.state.store}
+        store={this.state.store.filter(todo => todo.title.toLowerCase().includes(this.state.search.toLowerCase()))}
+        deleteHandler={this.deleteItem}
         // switchHandler={this.switchTodo}
         />
       </div>

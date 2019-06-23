@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 interface IControls {
     submitHandler(title: string):void
     submitTimeHandler(title: string):void
+    searchHandler(query: string):void
 }
 
 const Controls = (props: IControls) => (
     <div className='controls'>
-    <input type='text' placeholder='search' id='search'></input>
+    <input type='text' placeholder='search' id='search' onChange={(e)=>props.searchHandler(e.target.value)}></input>
     <input id="inp" className="input" type="text" placeholder="add some stuff" 
     // onChange={(e)=>props.submitHandler(e.target.value)}
     ></input>
