@@ -5,11 +5,11 @@ export interface IItemTime extends IItem {
     date: string
 }
 const TaskItemTime = (props: IItemTime) => (
-    <li className='item'>
+    <li className='item' key={props.id}>
         <input className='check' type='checkbox' checked={props.isDone}/>
-        <p>{props.title}</p>
-        <button className='del'>-</button>
-        <p>Time {props.date}</p>
+        <p style={{display:'inline-block'}}>{props.title}</p>
+        <button style={{display:'inline-block'}} className='del'>-</button>
+        <p style={{display:'inline-block'}}>Time {((Number(props.date)-(+new Date()))/86400000).toFixed(2)}</p>
     </li>
 )
 export default TaskItemTime;

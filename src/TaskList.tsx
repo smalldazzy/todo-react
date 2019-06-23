@@ -4,22 +4,30 @@ import TaskItemTime, { IItemTime} from './TaskItemTime';
 
 export interface ITaskList {
     store: (IItem | IItemTime)[]
-  }
+    // store: Array<IItem>
+}
+// interface ITaskListProps extends ITaskList{
+//     switchHandler: (id:number) => void
+// }
 
 const TaskList = (props: ITaskList) => (
     <ul className='list'>
       {props.store.map(task => {
-          if (task instanceof TaskItemTime)
+          if (task.type=='time')
           return (
             <TaskItemTime
               {...task as IItemTime}
               key={task.id}
-              {...task as IItemTime}
             />
           )
         else
           return (
-            <TaskItem {...task as IItem}/>
+            <TaskItem 
+            {...task as IItem} 
+            key={task.id}
+            // switchHandler={props.switchHandler}
+            />
+            
           )
         
       })}
