@@ -9,7 +9,7 @@ export interface ITaskList {
     // store: Array<IItem>
 }
 interface ITaskListProps extends ITaskList{
-    // switchHandler: (id:number) :void
+    switchHandler
     deleteHandler //почему не надо (тип)void
 
 }
@@ -30,7 +30,7 @@ const TaskList = (props: ITaskListProps) => (
             {...task as IItem} 
             key={task.id}
             deleteHandler={props.deleteHandler}
-            // switchHandler={props.switchHandler}
+            switchHandler={props.switchHandler}
             />
             
           )

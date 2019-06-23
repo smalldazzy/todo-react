@@ -3,6 +3,7 @@ interface IControls {
     submitHandler(title: string):void
     submitTimeHandler(title: string):void
     searchHandler(query: string):void
+    delDoneHandler
 }
 
 const Controls = (props: IControls) => (
@@ -13,7 +14,7 @@ const Controls = (props: IControls) => (
     ></input>
     <button id="submit" onClick={(e)=>props.submitHandler((document.getElementById('inp') as HTMLInputElement).value)}>Add</button>
     <button id='stime' onClick={(e)=>props.submitTimeHandler((document.getElementById('inp') as HTMLInputElement).value)}>W/ time</button>
-    <button id="clear">Clear done tasks</button>    
+    <button id="clear" onClick={(e)=>props.delDoneHandler()}>Clear done tasks</button>    
     </div>
   )
   export default Controls;

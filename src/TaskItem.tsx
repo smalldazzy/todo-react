@@ -9,12 +9,12 @@ export interface IItem {
     type: string    
     }
 interface IItemProps extends IItem{
-    // switchHandler: (id:number) => void
+    switchHandler: (id:number) => void
     deleteHandler(id:string):void
 }
 const TaskItem = (props: IItemProps) => (
     <li className='item' key={props.id}>
-        <input className='check' type='checkbox' defaultChecked={props.isDone} /*onChange={() => props.switchHandler(props.id)}*/ />
+        <input className='check' type='checkbox' defaultChecked={props.isDone} onChange={() => props.switchHandler(props.id)} />
         <p style={{display:'inline-block'}}>{props.title}</p>
         <button style={{display:'inline-block'}} className='del' id={(props.id).toString()}
         onClick={(e)=>props.deleteHandler(props.id.toString())}>-</button>
