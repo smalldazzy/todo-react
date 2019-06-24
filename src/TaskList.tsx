@@ -1,7 +1,6 @@
 import React from 'react';
 import TaskItem, { IItem } from './TaskItem';
 import TaskItemTime, { IItemTime} from './TaskItemTime';
-import { SSL_OP_NETSCAPE_REUSE_CIPHER_CHANGE_BUG } from 'constants';
 
 export interface ITaskList {
     store: (IItem | IItemTime)[]
@@ -11,17 +10,22 @@ export interface ITaskList {
 interface ITaskListProps extends ITaskList{
     switchHandler
     deleteHandler //почему не надо (тип)void
+    addSubHandler
+    switchSubHandler
+    delSubHandler
 
 }
 
 const TaskList = (props: ITaskListProps) => (
     <ul className='list'>
       {props.store.map(task => {
-          if (task.type=='time')
+          if (task.type==='time')
           return (
             <TaskItemTime
               {...task as IItemTime}
               key={task.id}
+              deleteHandler={props.deleteHandler}
+              switchHandler={props.switchHandler}
             />
           )
         else
@@ -31,6 +35,9 @@ const TaskList = (props: ITaskListProps) => (
             key={task.id}
             deleteHandler={props.deleteHandler}
             switchHandler={props.switchHandler}
+            addSubHandler={props.addSubHandler}
+            switchSubHandler={props.switchSubHandler}
+            delSubHandler={props.delSubHandler}
             />
             
           )

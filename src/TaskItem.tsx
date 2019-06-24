@@ -8,9 +8,12 @@ export interface IItem {
     subTasks: any[],
     type: string    
     }
-interface IItemProps extends IItem{
+export interface IItemProps extends IItem{
     switchHandler: (id:number) => void
     deleteHandler(id:string):void
+    addSubHandler(master:string):void
+    switchSubHandler
+    delSubHandler
 }
 const TaskItem = (props: IItemProps) => (
     <li className='item' key={props.id}>
@@ -18,13 +21,18 @@ const TaskItem = (props: IItemProps) => (
         <p style={{display:'inline-block'}}>{props.title}</p>
         <button style={{display:'inline-block'}} className='del' id={(props.id).toString()}
         onClick={(e)=>props.deleteHandler(props.id.toString())}>-</button>
-        <button style={{display:'inline-block'}} className='addsub' id={(props.id).toString()}>+</button>
-        {/* {props.subTasks.map(task=>{
-            return (
-                <SubTask {...task as IItem} />
-            )
-            })
-        } */}
+        <button style={{display:'inline-block'}} className='addsub' id={(props.id).toString()}
+        onClick={(e)=>props.addSubHandler(props.id.toString())}>+</button>
+
+        {(props.subTasks) ? props.subTasks.map(task=>(
+                <SubTask 
+                {...task as IItem}
+                switchSubHandler={props.switchSubHandler}
+                delSubHandler={props.delSubHandler}
+                 />
+            )) : console.log('pusto')
+            
+        }
     </li>
 )
 export default TaskItem;
