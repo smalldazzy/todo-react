@@ -1,11 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import TaskList, { ITaskList } from './TaskList';
-import TaskItem, { IItem } from './TaskItem';
 import Controls from './Controls';
-import { throwStatement } from '@babel/types';
-import SubTask from './SubTask';
+
 import TaskItemTime, { IItemTime } from './TaskItemTime';
 
 interface IProps { }
@@ -37,14 +34,14 @@ class App extends React.Component<IProps, ITaskList> {
   }
   componentDidMount() {
     let expid;
-    this.state.store.forEach(todo=>{
-      if (todo.type==='time' && todo.isDone===false && (Number((todo as IItemTime).date)<(+new Date())))  {
-        expid=todo.id;
+    this.state.store.forEach(todo => {
+      if (todo.type === 'time' && todo.isDone === false && (Number((todo as IItemTime).date) < (+new Date()))) {
+        expid = todo.id;
       }
     });
     this.setState({
-      store: this.state.store.map(todo=>
-        todo.id===expid ? {...todo, isDone: true} : todo)
+      store: this.state.store.map(todo =>
+        todo.id === expid ? { ...todo, isDone: true } : todo)
     })
   }
 
@@ -98,13 +95,7 @@ class App extends React.Component<IProps, ITaskList> {
       return {
         store: prev.store.map(todo =>
           todo.id === targetitem.id ? targetitem : todo)
-      }
-      // (todo.subTasks.push({
-      //   id:idgen(),
-      //   isDone:false,
-      //   type: 'reg',
-      //   title: title1,
-      // }))       
+      }      
     })
   }
   deleteItem(id: string) {
@@ -137,12 +128,6 @@ class App extends React.Component<IProps, ITaskList> {
   }
   seachim(query: string) {
     this.setState({ search: query })
-    //   this.setState(prev =>({
-    //   store: prev.store.filter(todo =>
-    //     todo.title.toLowerCase().includes(query.toLowerCase())
-    //   )
-    // })
-    // )
   }
   deleteDone() {
     this.setState(prev => ({
@@ -169,12 +154,9 @@ class App extends React.Component<IProps, ITaskList> {
         } return fi;
       });
       if (targetMaster) {
-        console.log(targetMaster);
-        console.log('menyaem');
         targetMaster.subTasks.map(todo =>
           todo.id === Number(id) ? (todo.isDone = !todo.isDone) : todo)
       }
-      console.log(targetMaster);
       return {
         store: prev.store.map(todo =>
           todo.id === targetMaster.id ? targetMaster : todo)
@@ -193,7 +175,6 @@ class App extends React.Component<IProps, ITaskList> {
           delDoneHandler={this.deleteDone}
         />
         <TaskList
-          // store={this.state.store}
           store={this.state.store.filter(todo => todo.title.toLowerCase().includes(this.state.search.toLowerCase()))}
           deleteHandler={this.deleteItem}
           switchHandler={this.switchTodo}
